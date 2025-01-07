@@ -34,11 +34,11 @@ class StoreTicketRequest extends BaseTicketRequest
 
         $user = $this->user();
 
-        if($this->routeIs('ticket.store'))
+        if($this->routeIs('tickets.store'))
         {
             if($this->user()->tokenCan(Abilities::CreateOwnTicket)){
 
-                $rules['data.relationships.author.data.id'] .= 'size:' . $user->id;
+                $rules['data.relationships.author.data.id'] .= '|size:' . $user->id;
 
             }
 
