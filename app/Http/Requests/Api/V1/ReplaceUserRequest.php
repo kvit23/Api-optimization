@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use App\Permissions\V1\Abilities;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTicketRequest extends BaseTicketRequest
+class ReplaceUserRequest extends BaseUserRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,20 +19,21 @@ class UpdateTicketRequest extends BaseTicketRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
+
+
     public function rules(): array
     {
         $rules = [
-            'data.attributes.title' => 'sometimes|string',
-            'data.attributes.description' => 'sometimes|string',
-            'data.attributes.status' => 'sometimes|string|in:A,C,H,X',
-            'data.relationships.author.data.id' => 'prohibited',
+            'data.attributes.name' => 'required|string',
+            'data.attributes.email' => 'required|email',
+            'data.attributes.isManager' => 'required|boolean',
+            'data.attributes.password' => 'required|string',
         ];
 
-        if($this->user()->tokenCan(Abilities::UpdateOwnTicket))
-        {
-            $rules['data.relationships.author.data.id'] = 'sometimes | integer';
-        }
-
         return $rules;
+
     }
+
+
 }
